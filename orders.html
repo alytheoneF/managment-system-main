@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Orders - Zaza Cafe</title>
+  <link rel="stylesheet" href="orders.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="logo">
+      <span class="zaza">Zaza</span>
+      <span class="cafe">Cafe</span>
+    </header>
+    <h2 class="page-title">New Order</h2>
+    <div class="orders-container">
+      
+      <!-- LEFT: Menu with + / – controls -->
+      <div class="menu-section">
+        <div class="menu-grid">
+          <!-- repeat this block per item (data-price in dollars) -->
+          <div class="menu-item" data-name="Juhaga Mix" data-price="7.50">
+            <img src="images/juhaga.jpg" alt="Juhaga Mix" class="menu-image"/>
+            <p class="item-name">Juhaga Mix</p>
+            <div class="counter">
+              <button class="counter-btn minus">–</button>
+              <span class="count">0</span>
+              <button class="counter-btn plus">+</button>
+            </div>
+          </div>
+
+          <div class="menu-item" data-name="Molten Cake" data-price="6.00">
+            <img src="images/molto.jpg" alt="Molten Cake" class="menu-image"/>
+            <p class="item-name">Molten Cake</p>
+            <div class="counter">
+              <button class="counter-btn minus">–</button>
+              <span class="count">0</span>
+              <button class="counter-btn plus">+</button>
+            </div>
+          </div>
+
+          <div class="menu-item" data-name="Red Bull" data-price="5.00">
+            <img src="images/redbull.jpg" alt="Red Bull" class="menu-image"/>
+            <p class="item-name">Red Bull</p>
+            <div class="counter">
+              <button class="counter-btn minus">–</button>
+              <span class="count">0</span>
+              <button class="counter-btn plus">+</button>
+            </div>
+          </div>
+
+          <div class="menu-item" data-name="Shisho To-Go" data-price="8.25">
+            <img src="images/shisho.jpg" alt="Shisho To-Go" class="menu-image"/>
+            <p class="item-name">Shisho To-Go</p>
+            <div class="counter">
+              <button class="counter-btn minus">–</button>
+              <span class="count">0</span>
+              <button class="counter-btn plus">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Receipt + table selector -->
+      <div class="receipt-section">
+        <label for="table-select" class="table-label">Table:</label>
+        <select id="table-select" class="table-select">
+          <option value="" disabled selected>Choose</option>
+          <!-- 1–9 -->
+          <script>
+            for(let i=1;i<=9;i++){
+              document.write(<option value="${i}">Table ${i}</option>);
+            }
+          </script>
+        </select>
+
+        <div class="receipt">
+          <table id="receipt-table">
+            <thead>
+              <tr>
+                <th>Item</th><th>Qty</th><th>Price</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2" class="total-label">Total</td>
+                <td id="total-price">$0.00</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div class="receipt-buttons">
+          <button id="submit-button" class="action-btn">Submit</button>
+          <button id="cancel-button" class="action-btn cancel">Cancel</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // grab all counters
+    document.querySelectorAll('.menu-item').forEach(item => {
+      const minus = item.querySelector('.minus');
+      const plus  = item.querySelector('.plus');
+      const span  = item.querySelector('.count');
+
+      minus.addEventListener('click', () => {
+        let val = parseInt(span.textContent);
+        if (val > 0) span.textContent = val - 1;
+        updateReceipt();
+      });
+      plus.addEventListener('click', () => {
+        let val = parseInt(span.textContent);
+        span.textContent = val + 1;
+        updateReceipt();
+      });
+    });
+
+    function updateReceipt() {
+      const tbody = document.querySelector('#receipt-table tbody');
+      tbody.innerHTML = '';
+      let total = 0;
+
+      document.querySelectorAll('.menu-item').forEach(item => {
+        const qty   = parseInt(item.querySelector('.count').textContent);
+        if (qty > 0) {
+          const name  = item.dataset.name;
+          const price = parseFloat(item.dataset.price);
+          const line  = (price * qty).toFixed(2);
+          total += parseFloat(line);
+
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>${name}</td><td>${qty}</td><td>$${line}</td>`;
+          tbody.appendChild(tr);
+        }
+      });
+
+      document.getElementById('total-price').textContent = `$${total.toFixed(2)}`;
+    }
+  </script>
+</body>
+</html>

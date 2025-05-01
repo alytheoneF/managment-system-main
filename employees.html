@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Employee Management</title>
+  <link rel="stylesheet" href="employees.css">
+</head>
+<body>
+  <div class="container">
+  <h1 class="brand-title"><span>Zaza</span> Cafe</h1>
+
+    <h1>Employee Management</h1>
+
+    <h2>Employee List</h2>
+    <div id="employee-list"></div>
+
+    <h2>Add / Edit Employee</h2>
+    <form id="employee-form">
+  <input type="hidden" id="editIndex">
+
+  <div class="form-row">
+    <input type="text" id="name" placeholder="Name" required>
+    <input type="number" id="salary" placeholder="Salary" required>
+  </div>
+
+  <div class="form-row">
+    <input type="text" id="overtime" placeholder="Overtime (e.g. 10-11)">
+    <input type="text" id="shift" placeholder="Shift (e.g. 9-10)">
+  </div>
+
+  <div class="form-row bottom-row">
+    <label class="attendance-label">
+      <input type="checkbox" id="attendance"> Attendance
+    </label>
+    <button type="submit">Save Employee</button>
+  </div>
+</form>
+
+  </div>
+
+  <script>
+    const employees = [];
+    const form = document.getElementById('employee-form');
+    const list = document.getElementById('employee-list');
+
+    function renderEmployees() {
+      list.innerHTML = '';
+      employees.forEach((emp, index) => {
+        const card = document.createElement('div');
+        card.className = 'employee-card';
+        card.innerHTML = `
+          <p><strong>Name:</strong> ${emp.name}</p>
+          <p><strong>Salary:</strong> ${emp.salary}</p>
+          <p><strong>Attendance:</strong> ${emp.attendance ? 'Present' : 'Absent'}</p>
+          <p><strong>Overtime:</strong> ${emp.overtime}</p>
+          <p><strong>Shift:</strong> ${emp.shift}</p>
+          <button onclick="editEmployee(${index})">Edit</button>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const employee = {
+        name: document.getElementById('name').value,
+        salary: document.getElementById('salary').value,
+        attendance: document.getElementById('attendance').checked,
+        overtime: document.getElementById('overtime').value,
+        shift: document.getElementById('shift').value
+      };
+
+      const editIndex = document.getElementById('editIndex').value;
+
+      if (editIndex === '') {
+        employees.push(employee);
+      } else {
+        employees[editIndex] = employee;
+        document.getElementById('editIndex').value = '';
+      }
+
+      form.reset();
+      renderEmployees();
+    });
+
+    function editEmployee(index) {
+      const emp = employees[index];
+      document.getElementById('name').value = emp.name;
+      document.getElementById('salary').value = emp.salary;
+      document.getElementById('attendance').checked = emp.attendance;
+      document.getElementById('overtime').value = emp.overtime;
+      document.getElementById('shift').value = emp.shift;
+      document.getElementById('editIndex').value = index;
+    }
+  </script>
+</body>
+</html>

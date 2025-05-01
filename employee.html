@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Employee Page - Zaza Cafe</title>
+  <link rel="stylesheet" href="employee.css">
+  <meta http-equiv="Cache-Control" content="no-store" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <script>
+    // Prevent access if not logged in as employee
+    if (localStorage.getItem("role") !== "employee") {
+      window.location.href = "login.html";
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <span class="zaza">Zaza</span><span class="cafe">Cafe</span>
+      </div>
+      <a href="#" onclick="logout()" class="logout">Log Out</a>
+    </header>
+
+    <main>
+      <h2>Employee Page</h2>
+      <div class="buttons">
+        <a href="menu.html" class="oval-btn">Menu</a>
+        <a href="orders.html" class="oval-btn">Orders</a>
+        <a href="tables.html" class="oval-btn">Tables</a>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function logout() {
+      localStorage.removeItem("role");
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>

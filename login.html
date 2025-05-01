@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zaza Cafe Login</title>
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <div class="logo">
+        <span class="zaza">Zaza</span>
+        <span class="cafe">Cafe</span>
+      </div>
+      <p class="instruction">Please sign in with valid account credentials</p>
+      <input type="text" placeholder="Username" class="input-field" />
+      <input type="password" placeholder="Password" class="input-field" />
+      <button class="login-button">Sign In</button>
+      <p class="support-text">Issue logging in?<br>Contact your admin</p>
+    </div>
+  </div>
+
+  <script>
+    // Step 1: Define valid users with roles
+    const users = [
+      { username: "youssef", password: "y123", role: "manager" },
+      { username: "mazen", password: "m123", role: "manager" },
+      { username: "ali", password: "a123", role: "employee" },
+      { username: "omar", password: "o123", role: "employee" }
+    ];
+
+    // Step 2: Handle login
+    const loginButton = document.querySelector(".login-button");
+
+    loginButton.addEventListener("click", () => {
+      const inputFields = document.querySelectorAll(".input-field");
+      const enteredUsername = inputFields[0].value.trim().toLowerCase();
+      const enteredPassword = inputFields[1].value;
+
+      const user = users.find(
+        u => u.username.toLowerCase() === enteredUsername && u.password === enteredPassword
+      );
+
+      if (user) {
+        localStorage.setItem("role", user.role);
+        if (user.role === "manager") {
+          window.location.href = "manager.html";
+        } else {
+          window.location.href = "employee.html";
+        }
+      } else {
+        alert("Incorrect username or password.");
+        inputFields[0].value = "";
+        inputFields[1].value = "";
+      }
+    });
+  </script>
+</body>
+</html>

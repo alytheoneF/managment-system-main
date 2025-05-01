@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zaza Cafe - Stock</title>
+  <link rel="stylesheet" href="stock.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="logo">
+      <span class="zaza">Zaza</span>
+      <span class="cafe">Cafe</span>
+    </header>
+
+    <h2 class="section-title">Stock Manager</h2>
+    <div class="items-grid">
+      <!-- Repeat for each stock item -->
+      <div class="item-box">
+        <img src="images/molto.png" alt="Molto" class="item-image" />
+        <p class="item-name">Molto</p>
+        <div class="quantity-control">
+          <button onclick="changeQty(this, -1)">-</button>
+          <span class="quantity">5</span>
+          <button onclick="changeQty(this, 1)">+</button>
+        </div>
+      </div>
+
+      <div class="item-box">
+        <img src="images/shigo.png" alt="Shigo" class="item-image" />
+        <p class="item-name">Shigo</p>
+        <div class="quantity-control">
+          <button onclick="changeQty(this, -1)">-</button>
+          <span class="quantity">3</span>
+          <button onclick="changeQty(this, 1)">+</button>
+        </div>
+      </div>
+
+      <div class="item-box">
+        <img src="images/redbull.png" alt="Red Bull" class="item-image" />
+        <p class="item-name">Red Bull</p>
+        <div class="quantity-control">
+          <button onclick="changeQty(this, -1)">-</button>
+          <span class="quantity">8</span>
+          <button onclick="changeQty(this, 1)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="save-button">Save Changes</button>
+  </div>
+
+  <script>
+    function changeQty(button, delta) {
+      const qtySpan = button.parentElement.querySelector(".quantity");
+      let current = parseInt(qtySpan.textContent);
+      current = Math.max(0, current + delta);
+      qtySpan.textContent = current;
+    }
+  </script>
+</body>
+</html>
